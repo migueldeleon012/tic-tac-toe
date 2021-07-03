@@ -473,6 +473,7 @@ footer p{
     background: 
     linear-gradient(to top, rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
     url('img/header.jpg') no-repeat -250px;
+    background-size: cover;
   }
 
   .header-img{
@@ -555,6 +556,10 @@ footer p{
 
   p{
     font-size: 1rem;
+  }
+
+  header{
+    background-size: cover;
   }
 
   .header-a i{
@@ -662,6 +667,8 @@ footer p{
     background: 
     linear-gradient(to top, rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
     url('img/header.jpg') no-repeat;
+    
+    background-size: cover;
   }
 
   .header-img{
@@ -720,5 +727,11 @@ footer p{
 
   .contact-btn{
     width: 50%;
+  }
+}
+
+@media only screen and (min-width: 1920px){
+  header{
+    background-size: cover;
   }
 }
