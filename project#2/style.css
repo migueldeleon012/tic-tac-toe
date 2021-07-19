@@ -4,6 +4,7 @@
   box-sizing: border-box;
   color: var(--text-color);
   font-family: 'Dela Gothic One', cursive;
+  letter-spacing: 1px;
 }
 
 :root{
@@ -39,6 +40,7 @@ main{
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 main .cell:nth-child(1),
@@ -67,8 +69,12 @@ main .cell:nth-child(3n+3){
 }
 
 .score-board p{
-  font-size: 2rem;
   padding: 20px 0;
+  display: inline-block;
+}
+
+.player-score-div, .score-board p{
+  font-size: 2rem;
 }
 
 .current-turn i,
@@ -79,7 +85,6 @@ main .cell:nth-child(3n+3){
 .alert-win{
   font-size: 3rem;
   text-align: center;
-  letter-spacing: 120%;
 }
 
 button{
@@ -89,10 +94,11 @@ button{
   border: 2px solid white;
   background-color: var(--bg-color)sparent;
   border-radius: 50px;
+  cursor: pointer;
 }
 
 .restart{
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 button:hover{
@@ -108,6 +114,15 @@ button:hover{
   left: 0;
   background-color: var(--bg-color);
   display: none;
+}
+
+.pop-up ol{
+  width: 50%;
+}
+
+.pop-up ol li{
+  margin-bottom: 20px;
+  font-size: 1.7rem;
 }
 
 .starting-button-div{
@@ -126,7 +141,39 @@ button:hover{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 60px;
 }
+
+.player-form{
+  width: 70%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player-form input{
+  width: 70%;
+}
+
+label{
+  font-size: 2.2rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+input{
+  width: 100%;
+  font-size: 2rem;
+  color: black;
+}
+
+.small{
+  font-size: 0.8rem;
+  margin-bottom: 50px;
+  display: inline-block;
+}
+
 .fa-stop-circle{
   color: var(--text-color);
   text-shadow: 
@@ -166,7 +213,7 @@ button:hover{
     0 0 30px #d40000, 
     0 0 40px #d40000, 
     0 0 55px #d40000, 
-    0 0 75px #d40000;;
+    0 0 75px #d40000;
   }
   50%{
     box-shadow: 0px;
@@ -180,9 +227,149 @@ button:hover{
     0 0 30px #49FF18, 
     0 0 40px #49FF18, 
     0 0 55px #49FF18, 
-    0 0 75px #49FF18;;
+    0 0 75px #49FF18;
   }
   100%{
     box-shadow: 0px;
+  }
+}
+
+@media only screen and (max-width: 1440px){
+  .player-form input{
+    width: 60%; 
+  }
+}
+
+@media only screen and (max-width: 1024px){
+  .score-board h1{
+    font-size: 3rem;
+  }
+
+  .score-board .player, .score-board span{
+    font-size: 2rem;
+  }
+
+  .pop-up ol li{
+    font-size: 1.2rem;
+  }
+}
+
+@media only screen and (max-width: 768px){
+  main{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .score-board{
+    order: -1;
+    text-align: center;
+  }
+  
+  .score-board h1{
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .score-board .player, .score-board span{
+    font-size: 1.5rem;
+  }
+
+  .game-board{
+    width: 45%;
+  }
+
+  .game-board i{
+    font-size: 3.8rem;
+  }
+}
+
+@media only screen and (max-width: 700px){
+  button {
+    font-size: 1.2rem;
+  }
+
+  .pop-up ol li{
+    font-size: 1rem;
+  }
+  
+  .player-form label{
+    font-size: 1.7rem;
+  }
+
+  .player-form .small{
+    font-size: 0.7rem;
+  }
+  
+  .player-form input{
+    width: 80%; 
+    font-size: 1rem;
+  }
+
+  .game-board i{
+    font-size: 3rem;
+  }
+
+  .alert-win{
+    font-size: 2.3rem;
+  }
+}
+
+@media only screen and (max-width: 425px){
+  button{
+    font-size: 1rem;
+  }
+
+  .score-board h1{
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .score-board .player, .score-board span{
+    font-size: 1rem;
+  }
+
+  .score-board .current-turn{
+    font-size: 1.2rem;
+  }
+  
+  .score-board .current-turn i{    
+    margin-right: 10px;
+  }
+
+  .game-board i{
+    font-size: 2.6rem;
+  }
+
+  .pop-up ol li{
+    font-size: 0.8rem;
+  }
+
+  .player-form label{
+    font-size: 1.5rem;
+  }
+  
+  .player-form .small{
+    font-size: 0.5rem;
+  }
+}
+
+@media only screen and (max-width: 375px){
+  button{
+    font-size: 0.8rem;
+  }
+
+  .pop-up ol li{
+    font-size: 0.7rem;
+  }
+
+  .game-board{
+    width: 60%;
+  }
+
+  .alert-win{
+    font-size: 2rem;
   }
 }

@@ -1,14 +1,34 @@
-//global variables
+//score
 const board = document.querySelector('#gameBoard');
 const cell = document.querySelectorAll('.cell')
 const scoreBoard = document.querySelector('#scoreBoard');
-const playerOne = document.querySelector('#playerOneScore');
-const playerTwo = document.querySelector('#playerTwoScore');
+const playerOneScore = document.querySelector('#playerOneScore');
+const playerTwoScore = document.querySelector('#playerTwoScore');
+const playerOneNameParagraph = document.querySelector('#playerOneNameParagraph');
+const playerTwoNameParagraph = document.querySelector('#playerTwoNameParagraph');
+
+//divs
 const alert = document.querySelector('#alertWin');
-const popUp = document.querySelector('#popUp');
+const outcomePopUp = document.querySelector('#outcomePopUp');
+const playerOneNameDiv = document.querySelector('#playerOneName');
+const playerTwoNameDiv = document.querySelector('#playerTwoName');
+const howToPlayDiv = document.querySelector('#instructions');
+const startButtonDiv = document.querySelector("#startingButtonDiv");
+const turn = document.querySelector('#currentTurn');
+
+//buttons
 const restartButton = document.querySelector('#restart');
 const startButton = document.querySelector('#startingButton');
-const turn = document.querySelector('#currentTurn');
+const howToPlayButton = document.querySelector('#howToPlay');
+const goBackButton = document.querySelector('#goBack');
+const playerOneButton = document.querySelector('#playerOneButton');
+const playerTwoButton = document.querySelector('#playerTwoButton');
+
+//inputs
+const playerOneName = document.querySelector('#playerOneNameInput');
+const playerTwoName = document.querySelector('#playerTwoNameInput');
+
+//logic 
 const green = '<i class="fas fa-play-circle"></i>';
 const red = '<i class="fas fa-stop-circle"></i>';
 const audio = new Audio('assets/marking sfx.mp4');
@@ -17,15 +37,46 @@ let greenScore = 0;
 let greenTurn = true;
 let counter = 0;
 
-// added the button for the music to play
+// start button, pick the names for the players
 startButton.addEventListener('click', ()=>{
-  startButton.classList.remove('active')
+  startButtonDiv.classList.remove('active')
+  playerOneNameDiv.classList.add('active');
+})
+
+playerOneButton.addEventListener('click', ()=>{
+  playerOneNameDiv.classList.remove('active');
+  playerTwoNameDiv.classList.add('active');
+  playerOneName.value == '' ? alertNameError() : playerOneNameParagraph.innerHTML = playerOneName.value;
+  playerOneName.value = ''
+  console.log(playerOneName.value)
+})
+
+playerTwoButton.addEventListener('click', ()=>{
+  playerTwoNameDiv.classList.remove('active');
+  playerTwoName.value == '' ? alertNameError() : playerTwoNameParagraph.innerHTML = playerTwoName.value;
+  playerTwoName.value = ''
   startGame();
 })
 
+// display the content of how to play
+howToPlayButton.addEventListener('click', ()=>{
+  startButtonDiv.classList.remove('active');
+  howToPlayDiv.classList.add('active');
+});
+
+//go back to the main screen
+goBackButton.addEventListener('click', ()=>{
+  howToPlayDiv.classList.remove('active');
+  startButtonDiv.classList.add('active');
+})
+
+function alertNameError(){
+  return;
+}
+
 // make each cell clickable
 function startGame(){
-  document.getElementById('bgm').play();
+  // document.getElementById('bgm').play();
   for(let i = 0; i < cell.length; i++){
     counter = 0
     cell[i].innerHTML = '';
@@ -44,91 +95,97 @@ function afterClick(e){
 
   // mark the cell and play audio
   targetCell.innerHTML = currentTurn;
-  // audio.play();
+  // audio.play()
 
   // swap turns and add counter
   greenTurn = !greenTurn;
   counter ++
 
   // view turn
-  turn.innerHTML = `${displayTurn}'s Turn`
+  turn.innerHTML = `${displayTurn}'s Turn`;
 
   //check wins
-
-  // from top (vertical, horizontal and diagonal)
-  if (cell[0].innerHTML == currentTurn) {
-    if (
-      (cell[1].innerHTML == currentTurn && cell[2].innerHTML == currentTurn) || 
-      (cell[3].innerHTML == currentTurn && cell[6].innerHTML == currentTurn) || 
-      (cell[4].innerHTML == currentTurn && cell[8].innerHTML == currentTurn)
-      ) {
-      handleWin(currentTurn);
-      restartGame();
-    } else if (counter == 9){
-      alertWin.innerHTML = 'Draw';
-      restartGame();
-    }
-  }
-  
-  //from bottom (horizontal and vertical)
-  else if (cell[8].innerHTML == currentTurn) {
-    if (
-      (cell[2].innerHTML == currentTurn && cell[5].innerHTML == currentTurn) || 
-      (cell[7].innerHTML == currentTurn && cell[6].innerHTML == currentTurn)
-      ){
-        handleWin(currentTurn);
-        restartGame();
-    } else if (counter == 9){
-      alertWin.innerHTML = 'Draw';
-      restartGame();
-    }
-  }
-  
-  //from middle (vertical and horizontal and the other diagonal)
-  else if (cell[4].innerHTML == currentTurn) {
-    if (
-      (cell[3].innerHTML == currentTurn && cell[5].innerHTML == currentTurn) || 
-      (cell[1].innerHTML == currentTurn && cell[7].innerHTML == currentTurn) ||
-      (cell[7].innerHTML == currentTurn && cell[1].innerHTML == currentTurn) ||
-      (cell[2].innerHTML == currentTurn && cell[6].innerHTML == currentTurn)
-      ) {
-      handleWin(currentTurn)
-      restartGame();
-    }
-  } else if (counter == 9){
-    alertWin.innerHTML = 'Draw';
-    restartGame();
-  }
+  checkWin(currentTurn);
 
   // if a player reaches a score of 5
   if(greenScore == 5 || redScore == 5){
-    alertWin.innerHTML = `${currentTurn} wins for Good, play again?`;
+    alertWin.innerHTML = `${currentTurn} wins for Good`;
+    restartButton.innerHTML =  `Go back to main menu`;
+    startingButtonDiv.classList.add('active');
   }
 };
+
+
+function checkWin(turn){
+    // from top (vertical, horizontal and diagonal)
+    if (cell[0].innerHTML == turn) {
+      if (
+        (cell[1].innerHTML == turn && cell[2].innerHTML == turn) || 
+        (cell[3].innerHTML == turn && cell[6].innerHTML == turn) || 
+        (cell[4].innerHTML == turn && cell[8].innerHTML == turn)
+        ) {
+        handleWin(turn);
+        restartGame();
+      } else if (counter == 9){
+        alertWin.innerHTML = 'Draw';
+        restartGame();
+      }
+    }
+    
+    //from bottom (horizontal and vertical)
+    else if (cell[8].innerHTML == turn) {
+      if (
+        (cell[2].innerHTML == turn && cell[5].innerHTML == turn) || 
+        (cell[7].innerHTML == turn && cell[6].innerHTML == turn)
+        ){
+          handleWin(turn);
+          restartGame();
+      } else if (counter == 9){
+        alertWin.innerHTML = 'Draw';
+        restartGame();
+      }
+    }
+    
+    //from middle (vertical and horizontal and the other diagonal)
+    else if (cell[4].innerHTML == turn) {
+      if (
+        (cell[3].innerHTML == turn && cell[5].innerHTML == turn) || 
+        (cell[1].innerHTML == turn && cell[7].innerHTML == turn) ||
+        (cell[7].innerHTML == turn && cell[1].innerHTML == turn) ||
+        (cell[2].innerHTML == turn && cell[6].innerHTML == turn)
+        ) {
+        handleWin(turn)
+        restartGame();
+      }
+    } else if (counter == 9){
+      alertWin.innerHTML = 'Draw';
+      restartGame();
+    }  
+}
 
 //how to handle the win
 function handleWin(turn){
   alertWin.innerHTML = `${turn} wins`;
   if (turn == green){
     greenScore ++;
-    playerOne.innerHTML = greenScore;
+    playerOneScore.innerHTML = greenScore;
   } else{
     redScore ++;
-    playerTwo.innerHTML = redScore;
+    playerTwoScore.innerHTML = redScore;
   }
 }
 
 //restart the game with or without resetting the score
 function restartGame (){
-  popUp.classList.add('active')
+  outcomePopUp.classList.add('active')
   restartButton.addEventListener('click', ()=>{
-    popUp.classList.remove('active');
+    outcomePopUp.classList.remove('active');
     alertWin.innerHTML = '';
     if(greenScore == 5 || redScore == 5){
       redScore = 0;
       greenScore = 0
-      playerOne.innerHTML = greenScore
-      playerTwo.innerHTML = redScore
+      playerOneScore.innerHTML = greenScore
+      playerTwoScore.innerHTML = redScore
     } 
     startGame();
   })
