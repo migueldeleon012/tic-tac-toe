@@ -1,8 +1,8 @@
-#Neon tac toe
+# Neon tac toe
 
 A basic 2 player game using HTML, CSS, and Javascript.
 
-##How to play
+## How to play
 
 The game is played on a grid that's 3 squares by 3 squares.
 You are either the play icon (Green) or the Stop icon (red). Players take turns putting their marks in empty squares.
